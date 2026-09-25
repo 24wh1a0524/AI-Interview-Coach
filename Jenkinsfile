@@ -21,10 +21,16 @@ pipeline {
             }
         }
 
-        stage('Verify Docker') {
+        stage('Deploy Application') {
             steps {
-                sh 'docker --version'
-                sh 'docker images'
+                sh 'docker compose down || true'
+                sh 'docker compose up -d'
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh 'docker ps'
             }
         }
     }
